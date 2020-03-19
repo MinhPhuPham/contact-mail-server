@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 var port = process.env.PORT || 3000;
 const app = express();
+require('dotenv').config();
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 
@@ -31,14 +32,14 @@ async function sendMail(user, callback) {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'phamminhphueur@gmail.com', //don't include the {{ }}
-            pass: 'nedxrwalbvbrzskx'
+            user: process.env.user_email, //don't include the {{ }}
+            pass: process.env.user_pass
         }
     });
 
     let mailOptions = {
-        from: 'phamminhphueur@gmail.com', // sender address
-        to: 'phamminhphueur@gmail.com', // list of receivers
+        from: process.env.user_email, // sender address
+        to: process.env.user_email, // list of receivers
         subject: "Contact Form", // Subject line
         html: `<p>${user.fullname}</p><p>${user.phonenumber}</p>
     <p>${user.emailAdd}</p><br><p>${user.messageText}</p><br>`
